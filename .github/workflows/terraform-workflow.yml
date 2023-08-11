@@ -1,0 +1,19 @@
+name: my-first-workflow
+on: workflow_dispatch
+jobs:
+  first_job:
+  runs_on: windows-latest
+  steps:
+  - name: Setup Terraform
+    uses: hashicorp/setup-terraform@v2
+    with:
+      terraform_version: 1.4.6
+  - name: Terraform Init
+    run: terraform init
+  - name: Terraform Format
+    run: terraform fmt -check
+  - name: Terraform Plan
+    run: terraform plan -input=false
+# On push to "main", deploy the Terraform infrastructure
+  - name: Terraform Apply
+    run: terraform apply -auto-approve -input=false
